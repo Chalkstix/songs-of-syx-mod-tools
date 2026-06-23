@@ -197,6 +197,13 @@ For anyone contributing:
 - **Keep output plain and actionable.** Reports should say what's wrong
   and where (class name, which mods), not just "conflict detected."
 
+## Versioning
+
+Patch releases (`0.1.x`) for fixes and small UX tweaks (wording, output
+formatting, packaging). Minor releases (`0.x.0`) for actual new
+capabilities. `1.0.0` is reserved for when this project does what it's
+ultimately for: not just detecting mod conflicts, but resolving them.
+
 ## Status
 
 Detector v1 (static class-collision scan) is working. Auto-resolution of
