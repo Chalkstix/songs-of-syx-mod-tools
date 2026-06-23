@@ -1,6 +1,7 @@
 package syxmodtools.detector;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -10,6 +11,10 @@ import java.util.List;
  *
  * Usage:
  *   java -jar mod-conflict-detector.jar --game-dir "C:\Steam\steamapps\common\Songs of Syx"
+ *
+ * If --game-dir is omitted and the jar is run from inside the Songs of Syx
+ * install folder itself (e.g. dropped in there and double-clicked via a
+ * .bat wrapper), the current directory is used automatically.
  *
  * Optional:
  *   --launcher-settings <path>   (default: %APPDATA%/songsofsyx/settings/LauncherSettings.txt)
@@ -43,7 +48,8 @@ public final class Main {
 
         if (workshopDir == null) {
             throw new UsageException("Could not determine the Workshop content folder. "
-                    + "Pass --game-dir or --workshop-dir explicitly.");
+                    + "Run this from inside your Songs of Syx install folder, "
+                    + "or pass --game-dir or --workshop-dir explicitly.");
         }
 
         System.out.println("Reading enabled mods from " + launcherSettings + " ...");
@@ -108,6 +114,9 @@ public final class Main {
     private static Path deriveWorkshopDir(ArgMap arg) {
         Path gameDir = arg.path("game-dir", null);
         if (gameDir == null) {
+            gameDir = currentDirIfLooksLikeGameDir();
+        }
+        if (gameDir == null) {
             return null;
         }
         // Steam layout: <library>/steamapps/common/<game> and <library>/steamapps/workshop/content/<appid>
@@ -118,10 +127,24 @@ public final class Main {
         return steamapps.resolve("workshop").resolve("content").resolve(SONGS_OF_SYX_APP_ID);
     }
 
+    /** If the jar was placed and run inside the actual game folder, use that as --game-dir. */
+    private static Path currentDirIfLooksLikeGameDir() {
+        Path cwd = Path.of("").toAbsolutePath();
+        return looksLikeGameDir(cwd) ? cwd : null;
+    }
+
+    /** A Songs of Syx install directory always contains the main game jar. */
+    static boolean looksLikeGameDir(Path dir) {
+        return Files.isRegularFile(dir.resolve("SongsOfSyx.jar"));
+    }
+
     private static String usageText() {
         return """
                 Usage:
                   java -jar mod-conflict-detector.jar --game-dir "<path to Songs of Syx install>"
+
+                  Or run with no arguments from inside the Songs of Syx install folder itself
+                  (the one containing SongsOfSyx.jar) -- it will be detected automatically.
 
                 Optional:
                   --launcher-settings <path>   (default: %APPDATA%/songsofsyx/settings/LauncherSettings.txt)
