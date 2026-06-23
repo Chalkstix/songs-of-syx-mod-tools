@@ -31,6 +31,8 @@ final class ArgMap {
 
     Path path(String key, Path fallback) {
         String value = values.get(key);
-        return (value == null) ? fallback : Path.of(value);
+        // normalize() collapses redundant "." segments -- e.g. from the Windows batch-file
+        // trick of appending "." to %~dp0 to avoid its trailing backslash escaping a closing quote.
+        return (value == null) ? fallback : Path.of(value).normalize();
     }
 }
