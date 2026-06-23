@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -26,7 +27,7 @@ public final class ClassCollisionDetector {
         Map<String, List<ModInfo>> classToMods = new LinkedHashMap<>();
 
         for (ModInfo mod : mods) {
-            var classesInMod = new java.util.LinkedHashSet<String>();
+            var classesInMod = new LinkedHashSet<String>();
             for (Path jar : mod.jars()) {
                 classesInMod.addAll(JarClassLister.listClasses(jar));
             }
