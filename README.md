@@ -33,7 +33,17 @@ A console tool that statically scans your enabled mods' jars and reports
 any class name defined by more than one of them — no need to launch the
 game.
 
-### Build
+### Quick start (no build required)
+
+Download `mod-conflict-detector.jar` from the
+[latest release](https://github.com/Chalkstix/songs-of-syx-mod-tools/releases/latest)
+and run it directly (requires a Java runtime, JRE 17+):
+
+```
+java -jar mod-conflict-detector.jar --game-dir "C:\Steam\steamapps\common\Songs of Syx"
+```
+
+### Build from source
 
 Requires a JDK (tested with JDK 21) and Maven.
 
