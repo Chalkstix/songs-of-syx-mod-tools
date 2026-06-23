@@ -208,3 +208,10 @@ ultimately for: not just detecting mod conflicts, but resolving them.
 
 Detector v1 (static class-collision scan) is working. Auto-resolution of
 detected conflicts is the next major piece of work.
+
+## AI disclosure
+
+This project was built collaboratively with an AI assistant (Claude),
+which wrote and modified most of the code under the repo owner's
+direction, review, and testing against the real game. Mentioned here for
+transparency.
