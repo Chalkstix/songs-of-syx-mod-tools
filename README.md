@@ -35,12 +35,14 @@ game.
 
 ### Quick start (no build required)
 
-Download `mod-conflict-detector.jar` and `run-from-game-dir.bat` from the
-[latest release](https://github.com/Chalkstix/songs-of-syx-mod-tools/releases/latest),
-drop both into your Songs of Syx install folder (the one containing
-`SongsOfSyx.jar`), and double-click `run-from-game-dir.bat`. It opens a
-console window, scans your enabled mods, and waits for a key press so you
-can read the result before it closes. Requires a Java runtime (JRE 17+).
+Download `mod-conflict-detector.zip` from the
+[latest release](https://github.com/Chalkstix/songs-of-syx-mod-tools/releases/latest)
+and unzip it (it contains `mod-conflict-detector.jar` and
+`run-from-game-dir.bat`). Drop both files into your Songs of Syx install
+folder (the one containing `SongsOfSyx.jar`), and double-click
+`run-from-game-dir.bat`. It opens a console window, scans your enabled
+mods, and waits for a key press so you can read the result before it
+closes. Requires a Java runtime (JRE 17+).
 
 Prefer the command line? Run from anywhere with:
 
