@@ -60,6 +60,14 @@ Optional flags:
 - `--launcher-settings <path>` — override the LauncherSettings.txt location
 - `--workshop-dir <path>` — override the derived Workshop content folder directly
 
+### Platform support
+
+Tested on Windows. The detection logic itself is plain Java and
+platform-agnostic, but the *default* LauncherSettings.txt location relies
+on the `%APPDATA%` environment variable, which only exists on Windows. On
+macOS/Linux, pass `--launcher-settings <path>` pointing at wherever Songs
+of Syx keeps that file on your system and it should work the same way.
+
 Example output:
 
 ```
