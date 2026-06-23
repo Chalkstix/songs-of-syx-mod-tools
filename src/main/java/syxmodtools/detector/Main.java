@@ -3,7 +3,9 @@ package syxmodtools.detector;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Console entry point. Scans a user's enabled Songs of Syx mods for
@@ -90,6 +92,27 @@ public final class Main {
         System.out.println("Load order above follows your MODS list in LauncherSettings.txt. "
                 + "Which mod actually wins isn't guaranteed by this tool alone -- "
                 + "if a feature seems missing in-game, try changing mod load order or check with the mod authors.");
+        System.out.println();
+        printSummary(collisions);
+    }
+
+    /** Prints the scannable bottom-line conclusion: which mods conflict, and how much. */
+    private static void printSummary(List<Collision> collisions) {
+        System.out.println("Summary:");
+        for (var entry : summarizeByModGroup(collisions).entrySet()) {
+            String mods = String.join(" <-> ", entry.getKey().stream().map(ModInfo::displayName).toList());
+            int count = entry.getValue();
+            System.out.println("  " + mods + ": " + count + " conflicting class(es)");
+        }
+    }
+
+    /** Counts colliding classes per distinct group of mods that collide on them. */
+    static Map<List<ModInfo>, Integer> summarizeByModGroup(List<Collision> collisions) {
+        Map<List<ModInfo>, Integer> conflictCounts = new LinkedHashMap<>();
+        for (Collision c : collisions) {
+            conflictCounts.merge(c.mods(), 1, Integer::sum);
+        }
+        return conflictCounts;
     }
 
     private static String modNames(Collision c) {

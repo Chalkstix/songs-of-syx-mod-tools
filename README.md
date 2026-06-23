@@ -110,7 +110,14 @@ Found 1 class-name collision(s):
 Load order above follows your MODS list in LauncherSettings.txt. Which mod
 actually wins isn't guaranteed by this tool alone -- if a feature seems
 missing in-game, try changing mod load order or check with the mod authors.
+
+Summary:
+  More Options <-> Better Blueprints: 1 conflicting class(es)
 ```
+
+The full per-class detail is listed first so you can scroll up to the
+specifics; the `Summary` at the bottom is the quick answer to "which mods
+are actually conflicting, and how much."
 
 ### Status
 
