@@ -1,8 +1,10 @@
 package syxmodtools.detector;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
@@ -30,5 +32,21 @@ public final class JarClassLister {
             }
         }
         return classes;
+    }
+
+    /**
+     * Returns the raw bytecode of a single class from a jar, or empty if the
+     * class is not present.  {@code className} uses dot-separated notation,
+     * e.g. {@code "settlement.room.main.copy.SavedPrints"}.
+     */
+    public static Optional<byte[]> readClass(Path jar, String className) throws IOException {
+        String entryName = className.replace('.', '/') + ".class";
+        try (JarFile jarFile = new JarFile(jar.toFile())) {
+            JarEntry entry = jarFile.getJarEntry(entryName);
+            if (entry == null) return Optional.empty();
+            try (InputStream in = jarFile.getInputStream(entry)) {
+                return Optional.of(in.readAllBytes());
+            }
+        }
     }
 }
